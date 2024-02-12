@@ -12,5 +12,9 @@ export default cleanEnv(process.env, {
     SMTP_PORT: str(),
     SMTP_MAIL: str(),
     SMTP_PASSWORD: str(),
-    JWT_URL: str()
+    JWT_URL: str(),
+    ACCESS_TOKEN_SECRET: str(),
+    ACCESS_TOKEN_EXPIRY: str(),
+    REFRESH_TOKEN_SECRET: str(),
+    REFRESH_TOKEN_EXPIRY: str(),
 });

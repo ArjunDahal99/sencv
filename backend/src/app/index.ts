@@ -4,8 +4,8 @@ import cors from 'cors'
 import { zodMiddleware } from '../middleware/zod-middleware';
 import morgan from "morgan";
 import { errorMiddleware } from '../middleware/error-handeler';
-import authRouter from '../routes/authRoute/auth-route'
-
+import routes from '../routes'
+import cookieParse from 'cookie-parser'
 export const app: Express = express()
 
 app.use(express.json({ limit: "50mb" }));
@@ -22,12 +22,10 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(morgan('dev'));
 app.use(zodMiddleware);
-
+app.use(cookieParse())
 //routes for auth
-app.use("/admin-api/v1", authRouter)
 
-
-
+app.use("/api/v1", routes)
 
 //test
 app.get('/', (req, res) =>

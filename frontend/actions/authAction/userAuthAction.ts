@@ -6,7 +6,7 @@ export const registerAccount = async (data: any) =>
 {
     try
     {
-        const response = await axios.post(`${API_URL}/createAdminAccount`, data);
+        const response = await axios.post(`${API_URL}/auth/registerAccount`, data);
         return response.data;
     } catch (error: any)
     {
@@ -18,7 +18,7 @@ export const loginToAccount = async (data: any) =>
 {
     try
     {
-        const response = await axios.post(`${API_URL}/loginToAccount`, data, { withCredentials: true });
+        const response = await axios.post(`${API_URL}/auth/loginToAccount`, data, { withCredentials: true });
         return response.data;
     } catch (error: any)
     {
@@ -30,7 +30,7 @@ export const activateAccount = async (data: any) =>
 {
     try
     {
-        const response = await axios.post(`${API_URL}/activateAccount`, data);
+        const response = await axios.post(`${API_URL}/auth/activateAccount`, data);
         return response.data;
     } catch (error: any)
     {
@@ -43,7 +43,7 @@ export const forgotPassword = async (data: any) =>
 {
     try
     {
-        const response = await axios.post(`${API_URL}/forgotPassword`, data);
+        const response = await axios.post(`${API_URL}/auth/forgotPassword`, data);
         return response.data;
     } catch (error: any)
     {
@@ -55,11 +55,23 @@ export const resetPassword = async (data: any) =>
 {
     try
     {
-        const response = await axios.post(`${API_URL}/resetPassword`, data);
+        const response = await axios.post(`${API_URL}/auth/resetPassword`, data);
         return response.data;
     } catch (error: any)
     {
         return error.response?.data;
     }
 };
+export const logoutFromAccount = async () =>
+{
+    try
+    {
+        const response = await axios.post(`${API_URL}/auth/logoutAccount`, {}, { withCredentials: true });
+        return response.data;
+    } catch (error: any)
+    {
+        return error.response?.data;
+    }
+};
+
 

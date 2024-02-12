@@ -10,7 +10,8 @@ interface AuthLayoutPropsType
 const AuthLayout = ({ children }: AuthLayoutPropsType) =>
 {
     const cookieStore = cookies()
-    const token = cookieStore.get('token')
+    const token = cookieStore.get('accessToken')
+    console.log(token)
     if (token)
     {
         redirect('/dashboard')

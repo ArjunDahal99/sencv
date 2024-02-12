@@ -11,5 +11,4 @@ const AccountActivationSchema = new Schema<AccountActivationTypes>(
     { timestamps: true }
 );
 
-
 export const AccountActivationModel = model<AccountActivationTypes>('AccountActivationTable', AccountActivationSchema);

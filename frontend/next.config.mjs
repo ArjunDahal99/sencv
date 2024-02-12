@@ -3,9 +3,11 @@ const nextConfig = {
 
     images: {
         domains: [
-            "picsum.photos"
+            "picsum.photos",
+            "utfs.io"
         ]
-    }
+    },
+
 };
 
 export default nextConfig;

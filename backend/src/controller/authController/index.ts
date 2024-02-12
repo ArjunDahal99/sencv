@@ -3,7 +3,7 @@ import { forgotPassword } from "./forgot-password-controller";
 import { loginToAccount } from "./login-controller";
 import { registerAccount } from "./register-controller";
 import { resetPassword } from "./reset-password-controller";
-
+import { logoutUser } from './logout-controller'
 
 export
 {
@@ -11,5 +11,6 @@ export
     forgotPassword,
     registerAccount,
     loginToAccount,
-    activateAccount
+    activateAccount,
+    logoutUser
 }

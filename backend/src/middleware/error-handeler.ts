@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { logger } from '../utils/logger';
 
 class ErrorHandler extends Error
 {
@@ -22,7 +23,7 @@ export const errorMiddleware = (
 {
     err.message = err.message || 'Internal Server Error';
     err.statusCode = err.statusCode || 500;
-
+    logger.error(err);
     return res.status(err.statusCode).json({
         success: err.success || false,
         message: err.message,

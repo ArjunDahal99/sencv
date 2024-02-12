@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
-
+import { useRouter } from 'next/navigation'
 import
 {
     Form,
@@ -20,12 +20,16 @@ import { FormErrorMessage } from "@/components/auth/FormErrorMessage"
 import { loginToAccount } from "@/actions/authAction/userAuthAction"
 import { useState } from "react"
 import Link from "next/link"
+import { useUserStore } from "@/store/user-store"
+
+
 
 
 
 const LoginForm = () =>
 {
-
+    const setUserAuth = useUserStore().setUserAuth
+    const router = useRouter()
     const [errorMessage, setErrorMessage] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
     const [isLoading, setIsLoading] = useState(false)
@@ -46,8 +50,11 @@ const LoginForm = () =>
             if (data.success)
             {
                 form.reset()
+                setUserAuth(data.user)
                 setSuccessMessage(data.message)
                 setErrorMessage('')
+                router.push('/dashboard')
+
             } else
             {
                 console.log(data)

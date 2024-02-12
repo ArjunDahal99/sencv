@@ -1,49 +1,59 @@
-import { Schema, model } from "mongoose";
-import { AccountDetailsModelType, SocialUrlsModelType, UserModelType } from "../../types/userModelTypes/user-types";
+import { Schema, model, Model } from "mongoose";
+import { UserModelType } from "../../types/userModelTypes/user-types";
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import env from '../../utils/validate-ENV'
 
-const UserModelSchema = new Schema<UserModelType>({
+const UserModelSchema: Schema<UserModelType> = new Schema<UserModelType>({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String },
     createdAt: { type: Date, default: Date.now },
     emailActivated: { type: Date },
+    refreshToken: { type: String },
     role: { type: String, default: 'user', required: true },
-    accountDetails: { type: Schema.Types.ObjectId, ref: 'AccountDetails' },
 });
 
-const AccountDetailsSchema = new Schema<AccountDetailsModelType>({
-    nickname: { type: String },
-    organizatonAddress: { type: String },
-    organizationName: { type: String },
-    position: { type: String },
-    workEmail: { type: String },
-    homeAddress: { type: String },
-    phoneNumbers: { type: [String] },
-    externalLinks: { type: [String] },
-    profilePicture: { type: String },
-    coverPicture: { type: String },
-    connections: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    socialUrls: { type: Schema.Types.ObjectId, ref: 'SocialUrls' },
+UserModelSchema.pre("save", async function (next)
+{
+    if (!this.isModified("password"))
+    {
+        return next();
+    }
+    this.password = bcrypt.hashSync(this.password, 10);
+    next();
 });
 
-const SocialUrlsSchema = new Schema<SocialUrlsModelType>({
-    whatsapp: { type: String },
-    viber: { type: String },
-    facebook: { type: String },
-    instagram: { type: String },
-    twitter: { type: String },
-    youtube: { type: String },
-    behance: { type: String },
-    github: { type: String },
-    dribbble: { type: String },
-    pinterest: { type: String },
-    tiktok: { type: String },
-    thread: { type: String },
-    linkedin: { type: String },
-    discord: { type: String },
-    wechat: { type: String },
-});
+UserModelSchema.methods.isPasswordCorrect = async function (password: string): Promise<boolean>
+{
+    return bcrypt.compareSync(password, this.password);
+};
 
-export const UserModel = model<UserModelType>('UserTable', UserModelSchema);
-export const AccountDetailsModel = model<AccountDetailsModelType>('AccountDetailsTable', AccountDetailsSchema);
-export const SocialUrlsModel = model<SocialUrlsModelType>('SocialUrlsTable', SocialUrlsSchema)
+UserModelSchema.methods.generateAccessToken = function (): string
+{
+    return jwt.sign(
+        {
+            _id: this._id,
+            email: this.email
+        },
+        env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: env.ACCESS_TOKEN_EXPIRY
+        }
+    );
+};
+
+UserModelSchema.methods.generateRefreshToken = function (): string
+{
+    return jwt.sign(
+        {
+            _id: this._id,
+        },
+        env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: env.REFRESH_TOKEN_EXPIRY
+        }
+    );
+};
+
+export const UserModel: Model<UserModelType> = model<UserModelType>('UserTable', UserModelSchema);
