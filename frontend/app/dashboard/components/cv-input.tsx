@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { FormSuccessMessage } from '@/components/auth/FormSuccessMessage';
-import { FormErrorMessage } from '@/components/auth/FormErrorMessage';
 import { sendCV } from '@/actions/server-action/send-cv';
 import { UploadButton } from '@/utils/uploadthing';
 import { useCVTemplateStore } from '@/store/cv-template-store';
@@ -62,12 +60,13 @@ const CvInput = () =>
                         alert(`ERROR! ${error.message}`);
                     }}
                 />
-                <FormSuccessMessage message={''} />
-                <FormErrorMessage message={''} />
+
                 <Button disabled={isLoading} className="w-full" variant={'outline'} type="submit">
                     {isLoading ? 'Sending...' : 'Send CV'}
                 </Button>
             </form>
+
+
         </div>
     );
 };

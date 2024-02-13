@@ -13,7 +13,7 @@ conntectToDatabase()
 
 //middleware config
 const corsOptions = {
-    origin: ['http://localhost:3000',],
+    origin: ['http://localhost:3000', 'https://sencv.vercel.app',],
     methods: ['*'],
     credentials: true,
 };
