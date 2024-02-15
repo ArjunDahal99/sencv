@@ -16,7 +16,7 @@ const CvPreview = () =>
     const email = useCVTemplateStore().email
 
     return (
-        <div className=" w-[50%] max-md:w-full min-h-[80vh] h-[80vh] rounded-lg dark:bg-white/10 bg-black/5 ">
+        <div className="   lg:w-[600px] max-md:w-full min-h-[80vh] h-[80vh] rounded-lg  dark:border-2  shadow-md ">
 
             {/* header portion */}
             <div className="  flex justify-between items-center px-6 py-4">

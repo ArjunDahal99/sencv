@@ -39,28 +39,36 @@ const CvInput = () =>
     };
 
     return (
-        <div className="w-[50%]  max-md:w-full">
+        <div className=" lg:w-[500px] max-md:w-full">
             <form onSubmit={(e) => onSubmit(e)} className="space-y-4">
-                <Label> To</Label>
-                <Input disabled={isLoading} type="email" placeholder="Enter your Email" value={email} onChange={handleInputChange('email')} />
-                <Label> Subject</Label>
-                <Input disabled={isLoading} placeholder="Title" value={subject} onChange={handleInputChange('subject')} />
-                <Label>Body</Label>
-                <Textarea disabled={isLoading} placeholder="Body" value={body} onChange={handleInputChange('body')} />
-                <Label className=' py-10'> Attachment</Label>
-                <UploadButton
-                    className="w-[200px] mx-auto border-2 border-slate-200  rounded-lg p-6"
-                    endpoint="imageUploader"
-                    onClientUploadComplete={(res) =>
-                    {
-                        setField({ fileName: res[0].name, filePath: res[0].url });
-                    }}
-                    onUploadError={(error: Error) =>
-                    {
-                        alert(`ERROR! ${error.message}`);
-                    }}
-                />
+                <div>
+                    <Label> To</Label>
+                    <Input disabled={isLoading} type="email" placeholder="Enter your Email" value={email} onChange={handleInputChange('email')} />
+                </div>
+                <div >
+                    <Label> Subject</Label>
+                    <Input disabled={isLoading} placeholder="Title" value={subject} onChange={handleInputChange('subject')} />
+                </div>
+                <div>
+                    <Label>Body</Label>
+                    <Textarea rows={9} disabled={isLoading} placeholder="Body" value={body} onChange={handleInputChange('body')} />
+                </div>
+                <div className="">
+                    <Label> Attachment</Label>
+                    <UploadButton
+                        className="w-[200px] mx-auto border-2 border-secondary rounded-lg p-6"
+                        endpoint="imageUploader"
+                        onClientUploadComplete={(res) =>
+                        {
+                            setField({ fileName: res[0].name, filePath: res[0].url });
+                        }}
+                        onUploadError={(error: Error) =>
+                        {
+                            alert(`ERROR! ${error.message}`);
+                        }}
+                    />
 
+                </div>
                 <Button disabled={isLoading} className="w-full" variant={'outline'} type="submit">
                     {isLoading ? 'Sending...' : 'Send CV'}
                 </Button>
