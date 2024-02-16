@@ -1,20 +1,21 @@
-"use client"
+import { cookies } from 'next/headers';
+import { getTemplateWithHeaders } from '@/actions/template/tempate-action';
+import { CardContainers } from './components/card-container';
+import { CvTemplateType } from '@/types/TemplateTypes';
 
-import { redirect } from 'next/navigation'
-import React from 'react'
-import CvInput from './components/cv-input'
-import CvPreview from './components/cv-preview'
 
-const DashBoard = () =>
+const CreateTemplateMenu = async () =>
 {
-
-
+    const cookieStore = cookies()
+    const token = cookieStore.get('accessToken')
+    const data = await getTemplateWithHeaders(token?.value)
+    console.log(data.userTemplate)
     return (
-        <div className=" max-md:pt-[60vh] max-md:p-10 lg:flex-wrap max-md:space-y-10  lg:space-x-10   lg:space-y-4  max-md:flex-col    flex justify-center max-md:items-center  lg:pt-[6vh]  w-full  h-[110vh] ">
-            <CvInput />
-            <CvPreview />
+        <div className=' flex  flex-wrap justify-center gap-x-6  gap-y-6 items-center '>
+            <CardContainers data={null} />
+            {data.userTemplate.map((t: CvTemplateType) => (<CardContainers data={t} />))}
         </div>
     )
 }
 
-export default DashBoard
+export default CreateTemplateMenu;

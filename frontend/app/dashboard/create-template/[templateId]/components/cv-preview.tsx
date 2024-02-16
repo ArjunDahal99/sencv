@@ -63,7 +63,7 @@ const CvPreview = () =>
                         <div className=' w-fit ' >
                             <a target="_blank" rel="noopener noreferrer" href={fileUrl} className=' flex flex-col justify-center items-center '>
                                 <Image className=' w-[120px] h-[120px]' src={PDFIcon} alt='pdf' />
-                                <h1>{fileName}</h1>
+                                <h1>{fileName.length > 15 ? fileName.slice(0, 11) + '...' : fileName}</h1>
                             </a>
                         </div>
                     )}

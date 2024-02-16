@@ -6,9 +6,9 @@ import env from '../utils/validate-ENV'
 import { UserModel } from "../models/userModel/user-model";
 export const authenticateUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) =>
 {
-    console.log("fdsfdssdf")
     // here to support mobile 
     const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer", "")
+
     if (!token)
     {
         throw new ErrorHandler(false, "Token Not Valid", 400)

@@ -12,6 +12,11 @@ html,body,:root{
 }
 
 
+.custom-class > *[data-ut-element="button"][data-state="uploading"] {
+  background-color: rgb(239 68 68 / 0.5);
+  color: rgb(0 0 0 / 0.5);
+  cursor: not-allowed;
+}
 
 .textarea-container {
   border: none;

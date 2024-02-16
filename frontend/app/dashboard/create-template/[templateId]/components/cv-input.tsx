@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { sendCV } from '@/actions/server-action/send-cv';
-import { UploadButton } from '@/utils/uploadthing';
+import { UploadDropzone } from '@/utils/uploadthing';
 import { useCVTemplateStore } from '@/store/cv-template-store';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
+import LoadingSpinner from '@/components/spinner';
 
 const CvInput = () =>
 {
@@ -51,24 +52,38 @@ const CvInput = () =>
                 </div>
                 <div>
                     <Label>Body</Label>
-                    <Textarea rows={9} disabled={isLoading} placeholder="Body" value={body} onChange={handleInputChange('body')} />
+                    <Textarea rows={5} disabled={isLoading} placeholder="Body" value={body} onChange={handleInputChange('body')} />
                 </div>
-                <div className="">
-                    <Label> Attachment</Label>
-                    <UploadButton
-                        className="w-[200px] mx-auto border-2 border-secondary rounded-lg p-6"
-                        endpoint="imageUploader"
-                        onClientUploadComplete={(res) =>
-                        {
-                            setField({ fileName: res[0].name, filePath: res[0].url });
-                        }}
-                        onUploadError={(error: Error) =>
-                        {
-                            alert(`ERROR! ${error.message}`);
-                        }}
-                    />
+                <Label> Attachment</Label>
 
-                </div>
+                <UploadDropzone
+                    appearance={{
+                        button({ ready, isUploading, uploadProgress })
+                        {
+                            return ` ${ready ? "text-xl m-4 p-4 bg-white text-black" : '  w-8 h-8 bg-blue-500 animate-pulse'} 
+                            ${uploadProgress ? 'rounded-full h-20 w-20 bg-violet-800 animate-ping' : ""}  
+                            `;
+                        },
+
+                    }}
+
+                    className="text-lg h-[250px] mx-auto  bg-secondary-foregroundy rounded-lg "
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(res: any) =>
+                    {
+                        setField({ fileName: res[0].name, filePath: res[0].url });
+                    }}
+                    onUploadError={(error: Error) =>
+                    {
+                        alert(`ERROR! ${error.message}`);
+                    }}
+                    onUploadBegin={(name: any) =>
+                    {
+                        // Do something once upload begins
+                        console.log("Uploading: ", name);
+                    }}
+                />
+
                 <Button disabled={isLoading} className="w-full" variant={'outline'} type="submit">
                     {isLoading ? 'Sending...' : 'Send CV'}
                 </Button>
