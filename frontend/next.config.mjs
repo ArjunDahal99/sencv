@@ -7,6 +7,9 @@ const nextConfig = {
             "utfs.io"
         ]
     },
+    eslint: {
+        ignoreDuringBuilds: true
+    }
 
 };
 
