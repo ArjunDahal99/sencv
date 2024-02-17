@@ -6,4 +6,6 @@ export interface CvTemplateModelType extends Document
     subject: string;
     email: string[];
     userId: Schema.Types.ObjectId;
+    fileName: string
+    fileUrl: string
 }

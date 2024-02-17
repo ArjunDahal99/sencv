@@ -8,12 +8,17 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import LoadingSpinner from '@/components/spinner';
+import { createTemplate } from '@/actions/template/tempate-action';
+import { useParams } from 'next/navigation';
 
 const CvInput = () =>
 {
+    const { templateId } = useParams()
     const [isLoading, setIsLoading] = useState(false);
     const { subject, body, fileName, filePath, setField, email } = useCVTemplateStore();
 
+
+    //chnaging the globalState
     const handleInputChange = (field: keyof typeof useCVTemplateStore.prototype) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     {
         setField({ [field]: e.target.value });
@@ -38,6 +43,18 @@ const CvInput = () =>
             }
         }
     };
+
+    const saveTemplate = async () =>
+    {
+        const data = { subject, body, fileName, fileUrl: filePath, setField, email, templateId }
+
+        setIsLoading(true)
+        const response = await createTemplate(data)
+        console.log(response)
+        setIsLoading(false)
+
+
+    }
 
     return (
         <div className=" lg:w-[500px] max-md:w-full">
@@ -87,8 +104,11 @@ const CvInput = () =>
                 <Button disabled={isLoading} className="w-full" variant={'outline'} type="submit">
                     {isLoading ? 'Sending...' : 'Send CV'}
                 </Button>
-            </form>
 
+            </form>
+            <Button onClick={saveTemplate} disabled={isLoading} className="w-full" variant={'outline'}>
+                {isLoading ? 'Saving...' : 'Save TemplateCV'}
+            </Button>
 
         </div>
     );
