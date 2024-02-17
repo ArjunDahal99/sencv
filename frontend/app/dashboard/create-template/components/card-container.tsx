@@ -33,6 +33,7 @@ export function CardContainers({ data }: { data: CvTemplateType | null })
 
     const deleteTemplate = async (data: string) =>
     {
+        console.log(data)
         const response = await deleteCvTemplate(data)
         console.log(response)
 

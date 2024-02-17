@@ -13,11 +13,10 @@ conntectToDatabase()
 
 //middleware config
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://sencv.vercel.app',],
-    methods: ['*'],
+    origin: ['http://localhost:3000', 'https://sencv.vercel.app'],
+    methods: ['DELETE', 'GET', 'POST', 'PATCH'],
     credentials: true,
 };
-
 //middlewares 
 app.use(cors(corsOptions))
 app.use(morgan('dev'));
