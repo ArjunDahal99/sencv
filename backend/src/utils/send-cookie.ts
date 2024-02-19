@@ -8,11 +8,12 @@ export const sendUserSessionCookie = (user: UserModelType, tokens: TokenResponse
     const options = {
         httpOnly: true,
         maxAge: 900000, // Set the maxAge in milliseconds
-        sameSite: false,
+        sameSite: true,
         secure: process.env.NODE_ENV === "Development" ? false : true,
+
     };
     res.status(statuscode)
-        .cookie("accessToken", accessToken, {})
+        .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
         .json({ success: true, user, accessToken, refreshToken, message });
 };
