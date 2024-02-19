@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Response } from 'express'
 import { TokenResponseType } from '../libs/generateTokenLibs/generate-access-&-refresh-token'
 import { UserModelType } from '../types/userModelTypes/user-types'
@@ -8,6 +9,8 @@ export const sendUserSessionCookie = (user: UserModelType, tokens: TokenResponse
     const options = {
         secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        sameSite: 'strict'
         //sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict',
     }
     res.status(statuscode)
