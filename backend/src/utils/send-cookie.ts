@@ -10,7 +10,6 @@ export const sendUserSessionCookie = (user: UserModelType, tokens: TokenResponse
         maxAge: 900000, // Set the maxAge in milliseconds
         sameSite: true,
         secure: process.env.NODE_ENV === "Development" ? false : true,
-
     };
     res.status(statuscode)
         .cookie("accessToken", accessToken, options)
