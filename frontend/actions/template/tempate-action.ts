@@ -10,7 +10,8 @@ export const getTemplateWithHeaders = async (token: string | any) =>
         console.log(API_URL)
         const requestOptions = {
             headers: {
-                'Authorization': `Bearer${token}`
+                'Authorization': `Bearer${token}`,
+                'Cache-Control': 'no-store',
             }
         };
 

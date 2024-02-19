@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import LoadingSpinner from '@/components/spinner';
 import { createTemplate } from '@/actions/template/tempate-action';
 import { useParams } from 'next/navigation';
 
@@ -24,30 +23,10 @@ const CvInput = () =>
         setField({ [field]: e.target.value });
     };
 
-    const onSubmit = async (e: any) =>
-    {
-        e.preventDefault()
-        if (fileName && filePath)
-        {
-            setIsLoading(true);
-            try
-            {
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-                sendCV({ body, subject, to: email, filePath, fileName });
-                setIsLoading(false);
-                toast.success("Email Sent")
-            } catch (error)
-            {
-                console.error('Error sending CV:', error);
-                setIsLoading(false);
-            }
-        }
-    };
 
     const saveTemplate = async () =>
     {
         const data = { subject, body, fileName, fileUrl: filePath, setField, email, templateId }
-
         setIsLoading(true)
         const response = await createTemplate(data)
         console.log(response)
@@ -58,18 +37,14 @@ const CvInput = () =>
 
     return (
         <div className=" lg:w-[500px] max-md:w-full">
-            <form onSubmit={(e) => onSubmit(e)} className="space-y-4">
-                <div>
-                    <Label> To</Label>
-                    <Input disabled={isLoading} type="email" placeholder="Enter your Email" value={email} onChange={handleInputChange('email')} />
-                </div>
+            <form onSubmit={(e) => saveTemplate()} className="space-y-4">
                 <div >
                     <Label> Subject</Label>
                     <Input disabled={isLoading} placeholder="Title" value={subject} onChange={handleInputChange('subject')} />
                 </div>
                 <div>
                     <Label>Body</Label>
-                    <Textarea rows={5} disabled={isLoading} placeholder="Body" value={body} onChange={handleInputChange('body')} />
+                    <Textarea rows={9} disabled={isLoading} placeholder="Body" value={body} onChange={handleInputChange('body')} />
                 </div>
                 <Label> Attachment</Label>
 
@@ -101,14 +76,11 @@ const CvInput = () =>
                     }}
                 />
 
-                <Button disabled={isLoading} className="w-full" variant={'outline'} type="submit">
-                    {isLoading ? 'Sending...' : 'Send CV'}
+                <Button onClick={saveTemplate} disabled={isLoading} type='submit' className="w-full" variant={'outline'}>
+                    {isLoading ? 'Saving...' : 'Save TemplateCV'}
                 </Button>
 
             </form>
-            <Button onClick={saveTemplate} disabled={isLoading} className="w-full" variant={'outline'}>
-                {isLoading ? 'Saving...' : 'Save TemplateCV'}
-            </Button>
 
         </div>
     );

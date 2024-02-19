@@ -1,22 +1,18 @@
 "use server"
-
-
 import nodemailer from "nodemailer";
-
 
 export interface Emailoptions
 {
     to: string;
     subject: string;
     body: string;
-    filePath?: string
-    fileName: string
+    filePath?: string;
+    fileName?: string;
 }
 
 export const sendCV = async (options: Emailoptions): Promise<void> =>
 {
-
-    console.log(options)
+    console.log(options);
     const transport = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
@@ -28,37 +24,39 @@ export const sendCV = async (options: Emailoptions): Promise<void> =>
 
     const { body, to, filePath, subject, fileName } = options;
 
-    const mailoptions = {
+    const mailoptions: any = {
         from: "dahalarjun409@gmail.com",
         to,
         subject,
-        html: `<body>${body.replace(/\n/g, '<br>')}</body>`,
-        attachments: [
-            {
-                filename: fileName,
-                path: filePath
-            }]
+        html: `<body>${body.replace(/\n/g, '<br>')}</body>`
     };
 
-    console.log(mailoptions)
+    // Conditionally add attachment if filePath is provided
+    if (filePath && fileName)
+    {
+        mailoptions.attachments = [{
+            filename: fileName,
+            path: filePath
+        }];
+    }
+
+    console.log(mailoptions);
 
     try
     {
-        const testResutl = await transport.verify()
-        console.log(testResutl)
-
+        const testResult = await transport.verify();
+        console.log(testResult);
     } catch (error)
     {
-        console.log(error)
+        console.log(error);
     }
 
     try
     {
-
-        const sendResult = await transport.sendMail(mailoptions)
-        console.log(sendResult)
+        const sendResult = await transport.sendMail(mailoptions as nodemailer.SendMailOptions); // Type assertion here
+        console.log(sendResult);
     } catch (error)
     {
-        console.log(error)
+        console.log(error);
     }
-}
+};

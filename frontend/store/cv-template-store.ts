@@ -7,8 +7,10 @@ interface CVTemplateState
     body: string;
     fileName: string;
     filePath: string;
-    email: string;
+    email: string[];
     setField: (field: Partial<CVTemplateState>) => void;
+    addEmail: (newEmail: string) => void; // Function to add an email
+    deleteEmail: (newEmail: string) => void; // Function to add an email
 }
 
 export const useCVTemplateStore = create<CVTemplateState>(
@@ -18,10 +20,12 @@ export const useCVTemplateStore = create<CVTemplateState>(
             (set) => ({
                 subject: '',
                 body: '',
-                email: '',
+                email: [],
                 fileName: '',
                 filePath: '',
                 setField: (field) => set(field),
+                addEmail: (newEmail) => set((state) => ({ email: [...state.email, newEmail] })),
+                deleteEmail: (email) => set((state) => ({ email: state.email.filter((e) => e != email) }))
             }),
             { name: 'cv-template' },
         ),

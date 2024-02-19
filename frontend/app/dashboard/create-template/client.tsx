@@ -19,7 +19,7 @@ const Client = ({ token }: { token: string | any }) =>
     return (
         <>
             {template &&
-                <div className=' flex  flex-wrap justify-start gap-x-6  gap-y-6 items-start p-6 '>
+                <div className=' flex  flex-wrap justify-start gap-x-6  max-md:justify-center  gap-y-6 items-start p-6 '>
                     <CardContainers data={null} />
                     {template?.userTemplate?.map((t: CvTemplateType) => (
                         <CardContainers data={t} key={t._id} />

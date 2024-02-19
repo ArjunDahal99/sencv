@@ -13,7 +13,6 @@ const CvPreview = () =>
     const body = useCVTemplateStore().body
     const fileName = useCVTemplateStore().fileName
     const fileUrl = useCVTemplateStore().filePath
-    const email = useCVTemplateStore().email
 
     return (
         <div className="   lg:w-[600px] max-md:w-full min-h-[80vh] h-[80vh] rounded-lg  dark:border-2  shadow-md ">
@@ -39,7 +38,7 @@ const CvPreview = () =>
                 <Avatar textSizeRatio={2} name={user?.username!} size="60" round />
                 <div className="">
                     <h1> <span className=' font-bold'> {user?.username}</span> {`<${user?.email}>`}</h1>
-                    <h1> to {`${email}`}</h1>
+                    <h1> to {`${'exmaple@gmail.com'}`}</h1>
                 </div>
             </div>
             {/* body portion */}
