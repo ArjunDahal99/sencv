@@ -8,7 +8,7 @@ export const sendUserSessionCookie = (user: UserModelType, tokens: TokenResponse
     const options = {
         httpOnly: true,
         maxAge: 900000, // Set the maxAge in milliseconds
-        sameSite: process.env.NODE_ENV === "Development" ? "lax" : "none" as "lax" | "none" | "strict" | undefined,
+        sameSite: true,
         secure: process.env.NODE_ENV === "Development" ? false : true,
     };
     res.status(statuscode)
