@@ -8,9 +8,8 @@ export const sendUserSessionCookie = (user: UserModelType, tokens: TokenResponse
     const options = {
         httpOnly: true,
         maxAge: 900000, // Set the maxAge in milliseconds
-        sameSite: true,
+        sameSite: false,
         secure: process.env.NODE_ENV === "Development" ? false : true,
-        domain: process.env.NODE_ENV === 'development' ? '.localhost' : '.sencv.vercel.app.com'
     };
     res.status(statuscode)
         .cookie("accessToken", accessToken, {})
